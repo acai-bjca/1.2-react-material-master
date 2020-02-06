@@ -4,15 +4,22 @@ import logo from './components/logo.svg';
 import './App.css';
 import {Login} from "./components/Login";
 import {TodoApp} from "./components/TodoApp";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from "moment";
+import moment, { relativeTimeThreshold } from "moment";
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 
 class App extends Component {
 
     constructor(props) {
-        super(props);        
+        super(props);
+        this.props = false;
+        this.state = {isLoggedIn: false}
+        this.changeView = this.changeView.bind(this);    
+    }
+    changeView(){       
+        //const newIsLoggedIn = this.props.isLoggedIn == true ? true : false;
+        const newIsLoggedIn = this.state.isLoggedIn == false ? true : false;     
+        this.setState({isLoggedIn: newIsLoggedIn});
     }
 
     render() {
@@ -23,7 +30,7 @@ class App extends Component {
         const TodoAppView = () => (
             <TodoApp/>
         );
-
+        const view = this.state.isLoggedIn == false ? LoginView : TodoAppView;
         return (
             <Router>
                 <div className="App">
@@ -35,18 +42,18 @@ class App extends Component {
                     <br/>
                     <br/>
 
-                    <ul>
-                        <li><Link to="/">Login</Link></li>
-                        <li><Link to="/todo">Todo</Link></li>
-                    </ul>
+                    {/*<ul>
+                        <li><Link to="/" onClick={this.changeView}>Login</Link></li>
+                        <li><Link to="/todo" onClick={this.changeView}>Todo</Link></li>
+                    </ul>*/}
 
                     <div>
-                        <Route exact path="/" component={LoginView}/>
-                        <Route path="/todo" component={TodoAppView}/>
+                        <Route component={this.state.isLoggedIn ? LoginView : TodoAppView}/>
                     </div>
                 </div>
             </Router>
         );
     }
 }
+//App.defaultProps = {isLoggedIn: false}; 
 export default App;

@@ -1,26 +1,30 @@
 
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React, {Component, useState} from 'react';
+//import logo from './logo.svg';
 import '../App.css';
 import {TodoList} from "./TodoList";
 import DatePicker from 'react-datepicker';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from "moment";
 
 export class TodoApp extends Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {items: [], text: '', priority: 0, dueDate: moment()};
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);        
+    }
+    handleDateChange(){
+        useState(new Date())
     }
 
-
-    render() {
-
+    render() {           
         return (
             <div className="TodoApp">                
                 <form onSubmit={this.handleSubmit} className="todo-form">
@@ -29,37 +33,45 @@ export class TodoApp extends Component {
                         Text:
                     </label>
 
-                    <input
+                    <TextField                    
                         id="text"
                         onChange={this.handleTextChange}
                         value={this.state.text}>
-                    </input>
-
-                    <br/>
-                    <br/>
+                    </TextField>
+                    <br/><br/>
+                    
                     <label htmlFor="priority" className="right-margin">
                         Priority:
                     </label>
 
-                    <input
+                    <TextField
                         id="priority"
                         type="number"
                         onChange={this.handlePriorityChange}
                         value={this.state.priority}>
-                    </input>
-                    <br/>
-                    <br/>
+                    </TextField>
+                    <br/><br/>
 
+                    <label htmlFor="due-date" className="right-margin">
+                        Date:
+                    </label>                    
                     <DatePicker
-                        id="due-date"
-                        selected={this.state.dueDate}
-                        placeholderText="Due date"
-                        onChange={this.handleDateChange}>
+                        label="Basic example"
+                        animateYearScrolling                  
+                        onChange={this.handleDateChange}
+                        selected={this.state.dueDate}                        
+                        placeholderText="Due date">
                     </DatePicker>
-                    <br/>
-                    <button>
+                    <br/><br/>
+
+                    <Button
+                        type="submit"                        
+                        variant="contained"
+                        color="primary"
+                        className="submit"
+                        title="Add">
                         Add #{this.state.items.length + 1}
-                    </button>
+                    </Button>
                 </form>
                 <br/>
                 <br/>
@@ -87,9 +99,7 @@ export class TodoApp extends Component {
     }
 
     handleSubmit(e) {
-
         e.preventDefault();
-
         if (!this.state.text.length || !this.state.priority.length || !this.state.dueDate)
             return;
 
@@ -106,5 +116,4 @@ export class TodoApp extends Component {
             dueDate: ''
         }));
     }
-
 }
