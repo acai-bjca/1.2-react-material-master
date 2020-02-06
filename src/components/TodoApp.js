@@ -1,12 +1,11 @@
 
-import React, {Component, useState} from 'react';
-//import logo from './logo.svg';
+import React, {Component} from 'react';
 import '../App.css';
 import {TodoList} from "./TodoList";
 import DatePicker from 'react-datepicker';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
+//import Card from '@material-ui/core/Card';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from "moment";
 
@@ -19,9 +18,6 @@ export class TodoApp extends Component {
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);        
-    }
-    handleDateChange(){
-        useState(new Date())
     }
 
     render() {           
