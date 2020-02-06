@@ -14,27 +14,27 @@ import App from '../App';
 export class Login extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {userName:'', passw:''};
+        this.state = {userName:'', passw:'', remember: false};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         localStorage.setItem('username', 'amalia');
         localStorage.setItem('password', 'amalia');
+        localStorage.setItem('remember', false);        
     }
-    handleChange(e){
-        if(e.id === 'email'){
-            this.setState({userName: e.target.value});
-            console.log('Se guardó el nombre de usuario '+this.state.userName);
-        }else if(e.id === 'password'){
-            this.setState({passw: e.target.value});
-            console.log('Se guardó la contraseña '+this.state.passw);
+    handleChange(e){        
+        if(e.target.id === 'email'){
+            this.setState({userName: e.target.value});            
+        }else if(e.target.id === 'password'){
+            this.setState({passw: e.target.value});            
         }
     }
 
     handleClick(e){
-        console.log('Se oprimió iniciar sesion');
-        if (!this.state.userName.length || !this.state.passw.length)
+        if (!this.state.userName || !this.state.passw){
             return;
-        if(this.state.userName === localStorage.getItem('username') && this.state.password === localStorage.getItem('password')){
-            return <App isLoggedIn={true}/>
-        }        
+        }if(this.state.userName === localStorage.getItem('username') && this.state.passw === localStorage.getItem('password')){
+            localStorage.setItem('remember', true);
+        }
     }
     
     render() {
